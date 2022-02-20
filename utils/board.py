@@ -9,39 +9,7 @@ class Color(Enum):
 class Board:
     
     def __init__(self):
-        
-        self.turn = Color.W # white to play
-        
-        # castle for white and black
-        self.w00 = True
-        self.w000 = True
-        self.b00 = True
-        self.b000 = True
-        
-        self.moves = 1
-        self.enpassant = -1 # en passant file
-        
-        # initial configuration of 8x8 board
-        self.board = [['*' for j in range(8)] for i in range(8)]
-        self.board[0] = ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R']
-        for i in range(8):
-            self.board[1][i] = 'P'
-        self.board[7] = ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r']
-        for i in range(8):
-            self.board[6][i] = 'p'
-        
-        # current selected square
-        self.selectedx = -1
-        self.selectedy = -1
-        
-        # coordinates of the king
-        self.whitekingx = 0
-        self.whitekingy = 4
-        self.blackkingx = 7
-        self.blackkingy = 4
-        
-        # type of promoted piece
-        self.promotion = 'Q'
+        self.initialize()
     
     # get color of a piece
     @staticmethod
@@ -83,6 +51,42 @@ class Board:
     @staticmethod
     def k_control(px, py, x, y):
         return abs(x-px) <= 1 and abs(y-py) <= 1 and (x != px or y != py)
+    
+    # initialize board
+    def initialize(self):
+        
+        self.turn = Color.W # white to play
+        
+        # castle for white and black
+        self.w00 = True
+        self.w000 = True
+        self.b00 = True
+        self.b000 = True
+        
+        self.moves = 1
+        self.enpassant = -1 # en passant file
+        
+        # initial configuration of 8x8 board
+        self.board = [['*' for j in range(8)] for i in range(8)]
+        self.board[0] = ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R']
+        for i in range(8):
+            self.board[1][i] = 'P'
+        self.board[7] = ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r']
+        for i in range(8):
+            self.board[6][i] = 'p'
+        
+        # current selected square
+        self.selectedx = -1
+        self.selectedy = -1
+        
+        # coordinates of the king
+        self.whitekingx = 0
+        self.whitekingy = 4
+        self.blackkingx = 7
+        self.blackkingy = 4
+        
+        # type of promoted piece
+        self.promotion = 'Q'
     
     # set the type of promoted piece
     def set_promotion(self, p):
