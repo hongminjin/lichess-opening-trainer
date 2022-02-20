@@ -2,6 +2,7 @@ import requests
 import json
 import random
 
+# Return a random move with probability proportional to its popularity
 def getmove(url):
     r = requests.get(url)
     try:
