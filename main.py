@@ -21,6 +21,7 @@ class Gui:
         self.load_images()
         
         self.moves = [] # list of played moves
+        self.pgn = [] # Game PGN
         self.pmove = "" # player's move
         self.lastmove = ""
         
@@ -119,8 +120,9 @@ class Gui:
     
     # start a new game
     def restart_game(self):
-        print(self.url.format(','.join(self.moves)))
+        print(' '.join(self.pgn))
         self.moves = []
+        self.pgn = []
         self.pmove = ""
         self.lastmove = ""
         self.b.initialize()
@@ -129,6 +131,19 @@ class Gui:
     # make a move and update chess board
     def make_move(self, move):
         self.moves.append(move)
+        piecetype = self.b.board[int(move[1])-1][ord(move[0])-ord('a')].upper()
+        if piecetype == 'K':
+            if ord(move[2]) - ord(move[0]) >= 2:
+                self.pgn.append("O-O")
+            elif ord(move[0]) - ord(move[2]) >= 2:
+                self.pgn.append("O-O-O")
+            else:
+                self.pgn.append(piecetype+move)
+        else:
+            mv = piecetype+move[0:4]
+            if len(move) == 5:
+                mv = mv + move[4].upper()
+            self.pgn.append(mv)
         if len(move) == 5:
             self.b.set_promotion(move[4])
         self.b.select_square(int(move[1])-1, ord(move[0])-ord('a'))
